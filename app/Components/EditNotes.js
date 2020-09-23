@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -11,10 +11,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AppScreen from "../Components/AppScreen";
 import Theme from "../Constants/Theme";
-
 import cache from "../Utilities/cache";
+import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ navigation, onValue }) => {
+const Header = ({ navigation, onValue, Notes }) => {
   return (
     <View
       style={{
@@ -48,7 +48,7 @@ const Header = ({ navigation, onValue }) => {
       >
         <TextInput
           onChangeText={(text) => onValue(text)}
-          defaultValue="Note Title"
+          defaultValue={Notes.title}
           style={{
             fontWeight: "bold",
             fontSize: 20,
@@ -71,76 +71,68 @@ const Header = ({ navigation, onValue }) => {
   );
 };
 
-const Footer = ({ onPress, visible }) => {
+const Footer = ({ onPress }) => {
   return (
-    visible && (
-      <View
-        style={{
-          position: "absolute",
-          flexDirection: "row",
-          bottom: 30,
-          right: 30,
-        }}
-      >
-        <TouchableOpacity>
-          <View
-            style={{
-              marginHorizontal: 10,
-              backgroundColor: Theme.mainColor,
-              width: 50,
-              height: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 25,
-            }}
-          >
-            <MaterialCommunityIcons name="attachment" size={24} color="white" />
-          </View>
-        </TouchableOpacity>
+    <View
+      style={{
+        position: "absolute",
+        flexDirection: "row",
+        bottom: 30,
+        right: 30,
+      }}
+    >
+      <TouchableOpacity>
+        <View
+          style={{
+            marginHorizontal: 10,
+            backgroundColor: Theme.mainColor,
+            width: 50,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 25,
+          }}
+        >
+          <MaterialCommunityIcons name="attachment" size={24} color="white" />
+        </View>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={onPress}>
-          <View
-            style={{
-              backgroundColor: Theme.success,
-              width: 50,
-              height: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 25,
-            }}
-          >
-            <MaterialCommunityIcons name="check-bold" size={24} color="white" />
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
+      <TouchableOpacity onPress={onPress}>
+        <View
+          style={{
+            backgroundColor: Theme.success,
+            width: 50,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 25,
+          }}
+        >
+          <MaterialCommunityIcons name="check-bold" size={24} color="white" />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-const AddNew = ({ navigation }) => {
-  const [Notes, setNotes] = useState({
-    title: "Unknown Title",
-    des: "",
-    timestamp: "",
-  });
+const EditNotes = ({ navigation, route }) => {
+  const Notes = route.params;
 
   const onNotes = (Des) => {
-    setNotes({ ...Notes, des: Des });
+    Notes.des = Des;
   };
 
   const onValue = (title) => {
-    setNotes({ ...Notes, title });
+    Notes.title = title;
   };
 
   const Finish = () => {
-    const times = new Date().toDateString();
-    const res = { ...Notes, timestamp: times };
-    cache.storeData(res);
-    navigation.navigate("Home");
+    cache.UpdateData(Notes, Notes.id);
+    navigation.goBack();
   };
   return (
     <AppScreen>
-      <Header navigation={navigation} onValue={onValue} />
+      <Header navigation={navigation} onValue={onValue} Notes={Notes} />
       <ScrollView>
         <View
           style={{
@@ -151,7 +143,8 @@ const AddNew = ({ navigation }) => {
         >
           <TextInput
             onChangeText={(text) => onNotes(text)}
-            placeholder="Notes Text"
+            defaultValue={Notes.des}
+            placeholder="Edit Notes Text"
             multiline
             style={{
               color: "white",
@@ -160,11 +153,11 @@ const AddNew = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-      <Footer onPress={Finish} visible={Notes.des.length > 0 ? true : false} />
+      <Footer onPress={Finish} />
     </AppScreen>
   );
 };
 
-export default AddNew;
+export default EditNotes;
 
 const styles = StyleSheet.create({});

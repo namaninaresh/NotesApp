@@ -8,50 +8,27 @@ import {
   Image,
 } from "react-native";
 import Theme from "../Constants/Theme";
-
+import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 
 const NotesList = ({ data }) => {
-  return (
-    <TouchableOpacity>
-      <View
-        style={{
-          borderRadius: 15,
-          height: width * data.aspectRation,
-          backgroundColor: data.color,
-          margin: 10,
-          justifyContent: "space-between",
-        }}
-      >
-        {data.image && (
-          <Image
-            source={data.image}
-            style={{
-              width: "100%",
-              height: "50%",
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-            }}
-          />
-        )}
+  const Rdata = JSON.parse(data[1]);
+  const Notes = { ...Rdata, id: data[0] };
 
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate("ViewNotes", Notes)}>
+      <View style={styles.Note}>
         <View style={{ paddingHorizontal: 10, overflow: "hidden" }}>
-          <Text style={styles.title}>{data.name}</Text>
-          {data.des && (
-            <Text
-              style={[
-                styles.description,
-                { height: 100 * 1.02 - data.aspectRation },
-              ]}
-            >
-              {data.des}
-            </Text>
-          )}
+          <Text style={styles.title}>{Notes.title}</Text>
+          <Text style={[styles.description, { height: 100 * 1.02 }]}>
+            {Notes.des}
+          </Text>
         </View>
 
         <View style={styles.footer}>
           <View style={styles.timeBox}>
-            <Text style={styles.time}>Jan 2015,7th</Text>
+            <Text style={styles.time}>{Notes.timestamp}</Text>
           </View>
         </View>
       </View>
@@ -94,5 +71,11 @@ const styles = StyleSheet.create({
   time: {
     color: Theme.timeText,
     fontSize: 10,
+  },
+  Note: {
+    backgroundColor: Theme.secondary,
+    borderRadius: 15,
+    margin: 10,
+    justifyContent: "space-between",
   },
 });

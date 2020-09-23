@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   Image,
   Dimensions,
@@ -15,8 +14,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Theme from "../Constants/Theme";
 
 import AppScreen from "../Components/AppScreen";
-import cache from "../Utilities/cache";
-import { useIsFocused } from "@react-navigation/native";
 const Header = ({ navigation }) => {
   return (
     <View
@@ -44,7 +41,7 @@ const Header = ({ navigation }) => {
   );
 };
 
-const Footer = ({ navigation, data, OnDelete }) => {
+const Footer = () => {
   return (
     <View
       style={{
@@ -67,10 +64,10 @@ const Footer = ({ navigation, data, OnDelete }) => {
       >
         <MaterialCommunityIcons name="clock" size={24} color={Theme.title} />
         <Text style={{ color: Theme.title, paddingLeft: 10 }}>
-          {data.timestamp}
+          June 2, 2017
         </Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("EditNotes", data)}>
+      <TouchableOpacity>
         <View
           style={{
             marginHorizontal: 10,
@@ -89,7 +86,7 @@ const Footer = ({ navigation, data, OnDelete }) => {
           />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={OnDelete}>
+      <TouchableOpacity>
         <View
           style={{
             backgroundColor: Theme.danger,
@@ -110,21 +107,7 @@ const Footer = ({ navigation, data, OnDelete }) => {
     </View>
   );
 };
-const ViewNote = ({ navigation, route }) => {
-  var NotesData = route.params;
-
-  useEffect(() => {
-    NotesData = route.params;
-  }, [useIsFocused()]);
-
-  const Delete = async () => {
-    const isDeleted = await cache.RemoveData(NotesData.id);
-
-    console.log(isDeleted);
-
-    isDeleted ? navigation.navigate("Home") : console.log("error");
-  };
-
+const ViewNote = ({ navigation }, data) => {
   return (
     <AppScreen>
       <Header navigation={navigation} />
@@ -134,15 +117,40 @@ const ViewNote = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <View>
-          <Text style={styles.title}>{NotesData.title}</Text>
+          <Text style={styles.title}>NOTE TITLE</Text>
         </View>
         <View style={styles.body}>
-          <Text style={styles.bodytext}>{NotesData.des}</Text>
-          <View></View>
+          <Text style={styles.bodytext}>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat.
+          </Text>
+          <View>
+            <Image
+              source={require("../assets/icons/img1.jpg")}
+              style={{ width: Dwidth, height: Dwidth, marginVertical: 15 }}
+            />
+            <Image
+              source={require("../assets/icons/img1.jpg")}
+              style={{ width: Dwidth, height: Dwidth, marginVertical: 15 }}
+            />
+            <Image
+              source={require("../assets/icons/img1.jpg")}
+              style={{ width: Dwidth, height: Dwidth, marginVertical: 15 }}
+            />
+          </View>
         </View>
       </ScrollView>
 
-      <Footer navigation={navigation} data={NotesData} OnDelete={Delete} />
+      <Footer />
     </AppScreen>
   );
 };
@@ -153,7 +161,6 @@ const styles = StyleSheet.create({
   title: {
     color: Theme.title,
     fontSize: 30,
-    textTransform: "uppercase",
   },
   body: {
     paddingTop: 10,

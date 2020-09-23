@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,8 @@ import AppScreen from "../Components/AppScreen";
 import Theme from "../Constants/Theme";
 import NotesList from "../Components/NotesList";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import cache from "../Utilities/cache";
 
 const SearchComp = () => {
   const navigation = useNavigation();
@@ -62,7 +63,7 @@ const Footer = ({ navigation }) => {
   );
 };
 
-const items = [
+const items2 = [
   {
     id: 1,
     name: "first",
@@ -106,6 +107,18 @@ const items = [
 ];
 
 const Home = ({ navigation }) => {
+  const [Loaded, setLoaded] = useState(false);
+  const isFocused = useIsFocused();
+  const [Data, setData] = useState([]);
+  //getDate,toDateString,toString
+  useEffect(() => {
+    (async () => {
+      let items = await cache.getALlData();
+      setData(items);
+      setLoaded(true);
+    })();
+    return () => {};
+  }, [isFocused]);
   return (
     <AppScreen>
       <View>
@@ -129,27 +142,40 @@ const Home = ({ navigation }) => {
           <Text style={styles.header}>Remainders</Text>
         </View>
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ marginTop: 15 }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "50%", margin: 0 }}>
-            {items
-              .filter((_, i) => i % 2 === 0)
-              .map((item) => (
-                <NotesList data={item} key={item.id} />
-              ))}
+
+      {Loaded &&
+        (Data.length > 0 ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ marginTop: 15 }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ width: "50%", margin: 0 }}>
+                {Data.filter((_, i) => i % 2 === 0).map((item) => (
+                  <NotesList data={item} key={item[0]} />
+                ))}
+              </View>
+              <View style={{ width: "50%", margin: 0 }}>
+                {Data.filter((_, i) => i % 2 !== 0).map((item) => (
+                  <NotesList data={item} key={item[0]} />
+                ))}
+              </View>
+            </View>
+          </ScrollView>
+        ) : (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+              opacity: 0.4,
+            }}
+          >
+            <Text style={{ color: Theme.title }}>
+              No Notes to Show , Please Create One
+            </Text>
           </View>
-          <View style={{ width: "50%", margin: 0 }}>
-            {items
-              .filter((_, i) => i % 2 !== 0)
-              .map((item) => (
-                <NotesList data={item} key={item.id} />
-              ))}
-          </View>
-        </View>
-      </ScrollView>
+        ))}
 
       <Footer navigation={navigation} />
     </AppScreen>

@@ -6,9 +6,11 @@ import Home from "../Screens/Home";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddNew from "../Screens/AddNew";
 import Account from "../Screens/Account";
+import ViewNote from "../Screens/ViewNote";
+import EditNotes from "../Components/EditNotes";
 
 const Stack = createStackNavigator();
-const StackNavigation = ({ navigation }) => {
+const HomeStackNavigation = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -33,13 +35,37 @@ const StackNavigation = ({ navigation }) => {
       />
       <Stack.Screen
         name="account"
-        component={Account}
+        component={AccountStackNavigation}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ViewNotes"
+        component={ViewNote}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditNotes"
+        component={EditNotes}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 };
 
-export default StackNavigation;
+const AccountStackNavigation = ({ navigation }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Acount"
+        component={Account}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export default HomeStackNavigation;
 
 const styles = StyleSheet.create({});
