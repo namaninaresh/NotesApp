@@ -71,7 +71,7 @@ const UserRegister = ({ navigation }) => {
         ></View>
       </View>
 
-      <View style={{ paddingTop: 30, flex: 1 }}>
+      <View style={{ justifyContent: "center", flex: 0.5 }}>
         <TextInput
           placeholder={"Enter Your name"}
           onChangeText={(text) => {
@@ -103,7 +103,7 @@ const UserRegister = ({ navigation }) => {
           </Text>
         )}
 
-        <View
+        {/**<View
           style={{
             justifyContent: "center",
             alignItems: "center",
@@ -157,7 +157,7 @@ const UserRegister = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-        </View>
+              </View> **/}
       </View>
 
       <View
