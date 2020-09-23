@@ -138,7 +138,6 @@ const ViewNote = ({ navigation, route }) => {
         </View>
         <View style={styles.body}>
           <Text style={styles.bodytext}>{NotesData.des}</Text>
-          <View></View>
         </View>
       </ScrollView>
 

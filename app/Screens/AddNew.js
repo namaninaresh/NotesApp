@@ -82,7 +82,7 @@ const Footer = ({ onPress, visible }) => {
           right: 30,
         }}
       >
-        <TouchableOpacity>
+        {/** <TouchableOpacity>
           <View
             style={{
               marginHorizontal: 10,
@@ -96,7 +96,7 @@ const Footer = ({ onPress, visible }) => {
           >
             <MaterialCommunityIcons name="attachment" size={24} color="white" />
           </View>
-        </TouchableOpacity>
+          </TouchableOpacity>**/}
 
         <TouchableOpacity onPress={onPress}>
           <View
@@ -141,11 +141,14 @@ const AddNew = ({ navigation }) => {
   return (
     <AppScreen>
       <Header navigation={navigation} onValue={onValue} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             backgroundColor: Theme.secondary,
-            borderRadius: 15,
+            borderRadius: 20,
+            flex: 1,
+            height: 800,
+            marginBottom: 80,
             padding: 10,
           }}
         >
@@ -154,8 +157,12 @@ const AddNew = ({ navigation }) => {
             placeholder="Notes Text"
             multiline
             style={{
+              textAlignVertical: "top",
+
+              padding: 10,
               color: "white",
               width: "100%",
+              height: "100%",
             }}
           />
         </View>

@@ -24,7 +24,10 @@ const SearchComp = () => {
       </TouchableOpacity>
       <TextInput style={styles.searchTextBox} placeholder="Search for notes" />
       <TouchableOpacity onPress={() => navigation.navigate("account")}>
-        <Image source={require("../assets/icons/user.png")} />
+        <Image
+          source={require("../assets/icons/default.png")}
+          style={{ width: 30, height: 30, borderRadius: 15 }}
+        />
       </TouchableOpacity>
     </View>
   );

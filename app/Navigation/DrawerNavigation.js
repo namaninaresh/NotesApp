@@ -8,6 +8,7 @@ import Home from "../Screens/Home";
 import StackNavigation from "../Navigation/StackNavigation";
 import Account from "../Screens/Account";
 import CustomDrawer from "./CustomDrawer";
+import Appinfo from "../Screens/DrawerScreens/Appinfo";
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +21,7 @@ export default function DrawerNavigation() {
     >
       <Drawer.Screen name="Home" component={StackNavigation} />
       <Drawer.Screen name="Account" component={Account} />
+      <Drawer.Screen name="Appinfo" component={Appinfo} />
     </Drawer.Navigator>
   );
 }

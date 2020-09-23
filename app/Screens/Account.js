@@ -38,30 +38,32 @@ const lists = [
 ];
 
 const ListItems = ({ data }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      alignItems: "center",
-      borderRadius: 10,
-      backgroundColor: Theme.secondary,
-      paddingHorizontal: 10,
-      marginVertical: 5,
-      paddingVertical: 20,
-    }}
-  >
-    <MaterialCommunityIcons
-      name={data.icon}
-      size={24}
-      style={{ paddingRight: 30 }}
-      color={Theme.textColor}
-    />
-    <Text style={{ color: Theme.textColor, flex: 1 }}>{data.name}</Text>
-    <MaterialCommunityIcons
-      name="chevron-right"
-      size={24}
-      color={Theme.textColor}
-    />
-  </View>
+  <TouchableOpacity>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 10,
+        backgroundColor: Theme.secondary,
+        paddingHorizontal: 10,
+        marginVertical: 5,
+        paddingVertical: 20,
+      }}
+    >
+      <MaterialCommunityIcons
+        name={data.icon}
+        size={24}
+        style={{ paddingRight: 30 }}
+        color={Theme.textColor}
+      />
+      <Text style={{ color: Theme.textColor, flex: 1 }}>{data.name}</Text>
+      <MaterialCommunityIcons
+        name="chevron-right"
+        size={24}
+        color={Theme.textColor}
+      />
+    </View>
+  </TouchableOpacity>
 );
 
 const Header = ({ navigation }) => {
@@ -154,7 +156,7 @@ const Account = ({ navigation }) => {
           }}
         >
           <Image
-            source={require("../assets/icons/img1.jpg")}
+            source={require("../assets/icons/default.png")}
             style={{
               width: 100,
               height: 100,
@@ -189,14 +191,13 @@ const Account = ({ navigation }) => {
           flex: 0.1,
 
           justifyContent: "flex-end",
-
           alignItems: "center",
           paddingBottom: 10,
-          flexDirection: "row",
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Text style={{ color: Theme.mainColor }}>Naresh Namani</Text>
+          <Text style={{ color: Theme.textColor }}>Made By </Text>
+          <Text style={{ color: Theme.mainColor }}> Naresh Namani</Text>
         </View>
       </View>
     </AppScreen>

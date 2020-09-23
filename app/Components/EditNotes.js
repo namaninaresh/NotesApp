@@ -81,7 +81,7 @@ const Footer = ({ onPress }) => {
         right: 30,
       }}
     >
-      <TouchableOpacity>
+      {/** <TouchableOpacity>
         <View
           style={{
             marginHorizontal: 10,
@@ -95,7 +95,7 @@ const Footer = ({ onPress }) => {
         >
           <MaterialCommunityIcons name="attachment" size={24} color="white" />
         </View>
-      </TouchableOpacity>
+        </TouchableOpacity> **/}
 
       <TouchableOpacity onPress={onPress}>
         <View
@@ -137,7 +137,10 @@ const EditNotes = ({ navigation, route }) => {
         <View
           style={{
             backgroundColor: Theme.secondary,
-            borderRadius: 15,
+            borderRadius: 20,
+            flex: 1,
+            height: 800,
+            marginBottom: 80,
             padding: 10,
           }}
         >
@@ -147,8 +150,12 @@ const EditNotes = ({ navigation, route }) => {
             placeholder="Edit Notes Text"
             multiline
             style={{
+              textAlignVertical: "top",
+
+              padding: 10,
               color: "white",
               width: "100%",
+              height: "100%",
             }}
           />
         </View>
